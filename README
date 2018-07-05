@@ -1,0 +1,109 @@
+
+
+Nume : George Caloian
+Grupa : 332 CC
+
+
+Tema 1 Alforitmi Paraleli si Distribuiti - 
+ - Modelarea unui automat celular - 
+  - Game of Life
+
+
+Abordare problema : 
+
+
+	Dat fiind automatul celular prezentat
+	problema s-a rezumat la urmatoarele:
+
+
+	Bordarea matricii la fiecare pas astfel 
+	incat toate cele N*M (Lin*Col) celule din
+	matricea initiala sa beneficieze de acelasi
+	numar de vecini indiferent de zona in care
+	se afla (centru, margine, colt).Bordarea
+	s-a realizat conform indicatiilor din enunt.
+
+
+	Pargurgerea matricii de la pasul i facand:
+	suma vecinilor fiecarui individ fie el ALIVE
+	fie DEAD pentru a determina cazul in care se
+	incadreaza in vederea determinarii starii in
+	care se va afla la urmatoare iteratie.
+	Incadrarea in unul dintre cazurile prezentate
+	in enunt si completarea matricii de la pasul i+1
+	cu valoarea corespunzatoare.(foarte important
+	sa nu suprascriem aceeasi matrice pentru a nu
+	da nastere unor ambiguitati)
+
+
+
+Abordare paralela:
+
+
+	Algoritmului serial i-au fost facute urmatoarele
+	modificari:
+	Bordarea matricii se face in paralel
+	atat cele 2 linii(sus jos)
+	cat si celel 2 coloane (stanga drepta)
+	Parcurgerea matricii in vederea incardari 
+	intr-o regula si completarea pentru pasul urmator 
+	se face in paralel
+	Copierea matricilor se face in paralel
+
+
+
+Testere pe cluster:
+
+
+	Pentru a evidentia diferenta in timpul de
+	executie intre varianta seriala si cea 
+	paralela cu numar diferit de threaduri am
+	realizat testarea pe o matrice 5000x5000
+	folosind un numar de 100 de iteratii
+	obtinand urmatoarele valori:
+
+
+
+serial: real 0m53.953s
+	user 0m53.586s
+	sys  0m0.132s
+
+
+
+parallel 1 thread: real 1m1.111s
+		   user 1m0.731s
+		   sys	0m0.134s
+
+
+parallel 2 threads: real 0m32.782s
+		    user 1m1.645s
+		    sys	 0m0.167s
+
+
+
+parallel 4 threads: real 0m17.748s
+		    user 1m1.704s
+		    sys	 0m0.159s
+
+
+
+parallel 6 threads: real 0m13.042s
+		    user 1m7.384s
+		    sys	 0m0.176s
+
+
+
+parallel 8 threads: real 0m11.061s
+		    user 1m8.114s
+		    sys	 0m0.167s
+
+
+
+parallel 10 threads: real 0m9.566s
+		     user 1m10.478s
+		     sys  0m0.173s
+
+
+Pe baza acestor valori am realizat un
+grafic care sa ilustreze vizual 
+diferentele aferente.
